@@ -14,8 +14,11 @@ const mapDispatchToProps = dispatch => {
     UnsetLoading: function() {
       dispatch({ type: "UNSET_LOADING" });
     },
-    AddArticles: function(new_articles) {
-      dispatch({ type: "SET_ARTICLE", new_articles: new_articles });
+    SetArticles: function(new_articles) {
+      dispatch({ type: "SET_ARTICLES", new_articles: new_articles });
+    },
+    LoadArticles: function(new_articles) {
+      dispatch({ type: "LOAD_ARTICLE", new_articles: new_articles });
     }
   };
 };

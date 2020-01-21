@@ -69,6 +69,10 @@ const Date = styled(Info)`
   padding-right: 5px;
   color: ${props => props.theme.colors.grey};
 `;
+const FavoriteIcon = styled.i`
+  font-size: ${props => props.theme.fontSizes.small};
+`;
+
 const Abstract = styled(Info)`
   font-family: Gelasio;
   color: ${props => props.theme.colors.lightDark};
@@ -94,8 +98,28 @@ const PrintHeadline = styled.div`
 `;
 
 class Article extends Component {
+  handleAdd() {
+    this.props.AddFavorite(this.props.articleInfo.id, this.props.articleInfo);
+  }
+
+  handleRemove() {
+    this.props.RemoveFavorite(this.props.articleInfo.id);
+  }
+
   render() {
-    const date = moment(this.props.pub_date);
+    const {
+      id,
+      web_url,
+      section_name,
+      subsection_name,
+      main_headline,
+      abstract,
+      byline,
+      print_headline,
+      image_src
+    } = this.props.articleInfo;
+    const { favorites } = this.props;
+    const date = moment(this.props.articleInfo.pub_date);
     const month = moment.months(date.get("month"));
     const day = date.get("date");
 
@@ -105,30 +129,37 @@ class Article extends Component {
           <Date>
             {month} {day}
           </Date>
+          {id in favorites && favorites[id] ? (
+            <FavoriteIcon
+              className="fas fa-star"
+              onClick={this.handleRemove.bind(this)}
+            ></FavoriteIcon>
+          ) : (
+            <FavoriteIcon
+              onClick={this.handleAdd.bind(this)}
+              className="far fa-star"
+            ></FavoriteIcon>
+          )}
         </DateContainer>
         <ArticleContainer>
-          <ArticleMain
-            href={this.props.web_url}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+          <ArticleMain href={web_url} target="_blank" rel="noopener noreferrer">
             <SubsectionName>
-              {this.props.section_name
-                ? this.props.section_name
-                : this.props.subsection_name}
+              {section_name ? section_name : subsection_name}
             </SubsectionName>
-            <Title>{this.props.main_headline}</Title>
-            <Abstract>{this.props.abstract}</Abstract>
-            <Info>{this.props.byline}</Info>
+            <Title>{main_headline}</Title>
+            <Abstract>
+              {abstract.length <= 20
+                ? abstract
+                : `${abstract.substring(0, 20)}...더보기`}
+            </Abstract>
+            <Info>{byline}</Info>
             <Line></Line>
             <PrintHeadline>
-              {this.props.print_headline
-                ? `PRINT EDITION ${this.props.print_headline}`
-                : undefined}
+              {print_headline ? `PRINT EDITION ${print_headline}` : undefined}
             </PrintHeadline>
           </ArticleMain>
           <ImageContainer>
-            <Image src={this.props.image_src} alt="" />
+            <Image src={image_src} alt="" />
           </ImageContainer>
         </ArticleContainer>
       </Container>

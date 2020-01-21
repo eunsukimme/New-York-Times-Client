@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import Article from "./Article";
+import Article from "../containers/Article";
 import logo from "../logo.svg";
 
 const Container = styled.div`
@@ -92,28 +92,26 @@ class Main extends Component {
     );
     console.log(totalArticles);
 
-    const articleComponents = totalArticles.map((article, id) => {
-      return (
-        <Article
-          key={id}
-          main_headline={article.headline.main}
-          print_headline={article.headline.print_headline}
-          abstract={article.abstract}
-          image_src={
-            article.multimedia[0]
-              ? `https://nytimes.com/${article.multimedia[0].url}`
-              : logo
-          }
-          web_url={article.web_url}
-          byline={article.byline.original}
-          section_name={article.section_name}
-          subsection_name={article.subsection_name}
-          pub_date={article.pub_date}
-        />
-      );
+    const articleComponents = totalArticles.map(article => {
+      const articleInfo = {
+        id: article._id,
+        main_headline: article.headline.main,
+        print_headline: article.headline.print_headline,
+        abstract: article.abstract,
+        image_src: article.multimedia[0]
+          ? `https://nytimes.com/${article.multimedia[0].url}`
+          : logo,
+
+        web_url: article.web_url,
+        byline: article.byline.original,
+        section_name: article.section_name,
+        subsection_name: article.subsection_name,
+        pub_date: article.pub_date
+      };
+      return <Article key={article._id} articleInfo={articleInfo} />;
     });
 
-    this.props.AddArticles(articleComponents);
+    this.props.SetArticles(articleComponents);
     this.props.UnsetLoading();
   }
 
@@ -124,6 +122,8 @@ class Main extends Component {
           <StyledForm onSubmit={this.handleSubmit.bind(this)}>
             <StyledInput
               type="text"
+              value={this.state.keyword}
+              placeholder={"keyword to search"}
               onChange={this.handleChange.bind(this)}
             ></StyledInput>
             <StyledIcon

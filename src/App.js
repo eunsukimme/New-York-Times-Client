@@ -2,9 +2,10 @@ import React, { Component } from "react";
 import { ThemeProvider } from "styled-components";
 import theme from "./styles/Theme";
 import Global from "./styles/global";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Header from "./components/Header";
 import Main from "./containers/Main";
+import Favorites from "./containers/Favorites";
 
 class App extends Component {
   render() {
@@ -17,7 +18,9 @@ class App extends Component {
             <Route exact path="/">
               <Main />
             </Route>
-            <Route path="/favorite"></Route>
+            <Route path="/favorites">
+              <Favorites />
+            </Route>
           </Switch>
         </ThemeProvider>
       </Router>
