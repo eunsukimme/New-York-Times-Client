@@ -7,8 +7,8 @@ const theme = {
   },
   fonts: ["Noto Serif", "georgia", "times new roman", "sans-serif"],
   fontSizes: {
-    large: "3rem",
-    middle: "2rem",
+    large: "2rem",
+    middle: "1.6rem",
     small: "1rem",
     main_headline: ["24px", "18px", "18px"],
     abstract: ["15px", "14px", "14px"],

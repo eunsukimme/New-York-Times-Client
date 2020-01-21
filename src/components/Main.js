@@ -13,8 +13,41 @@ const Container = styled.div`
 
 const SearchContainer = styled.div`
   width: 100%;
-  height: 200px;
+  height: 140px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background-color: ${props => props.theme.colors.powderWhite};
+`;
+
+const StyledForm = styled.form`
+  width: 86%;
+  max-width: 680px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  border-bottom: 1px solid ${props => props.theme.colors.powderGrey};
+
+  :focus {
+    border-bottom: 2px solid lightgrey;
+  }
+`;
+const StyledInput = styled.input`
+  width: 100%;
+  height: 46px;
+  border: none;
+  outline: none;
+
+  font-size: ${props => props.theme.fontSizes.middle};
+  font-weight: bold;
+  background-color: transparent;
+`;
+const StyledIcon = styled.i`
+  cursor: pointer;
+  color: ${props => props.theme.colors.grey};
+  font-size: ${props => props.theme.fontSizes.middle};
 `;
 
 const ArticleContainer = styled.div`
@@ -59,9 +92,10 @@ class Main extends Component {
     );
     console.log(totalArticles);
 
-    const articleComponents = totalArticles.map(article => {
+    const articleComponents = totalArticles.map((article, id) => {
       return (
         <Article
+          key={id}
           main_headline={article.headline.main}
           print_headline={article.headline.print_headline}
           abstract={article.abstract}
@@ -72,6 +106,7 @@ class Main extends Component {
           }
           web_url={article.web_url}
           byline={article.byline.original}
+          section_name={article.section_name}
           subsection_name={article.subsection_name}
           pub_date={article.pub_date}
         />
@@ -86,23 +121,19 @@ class Main extends Component {
     return (
       <Container>
         <SearchContainer>
-          <form onSubmit={this.handleSubmit.bind(this)}>
-            <input type="text" onChange={this.handleChange.bind(this)}></input>
-            <button onClick={this.handleSubmit.bind(this)}>submit</button>
-          </form>
+          <StyledForm onSubmit={this.handleSubmit.bind(this)}>
+            <StyledInput
+              type="text"
+              onChange={this.handleChange.bind(this)}
+            ></StyledInput>
+            <StyledIcon
+              className="fas fa-search"
+              onClick={this.handleSubmit.bind(this)}
+            ></StyledIcon>
+          </StyledForm>
         </SearchContainer>
         <ArticleContainer>
           {this.props.loading ? "searching articles..." : this.props.articles}
-          {/* <Article
-            main_headline="South Korean Leader Considers Letting Its Tourists Visit North Korea"
-            print_headline="South Korean Leader Mulls Tourist Visits to the North"
-            abstract="Kim Jong-un has been trying to attract more foreign tourists to ease the pain of sanctions; South Korea says it may allow visits to the North."
-            image_src="https://static01.nyt.com/images/2020/01/14/world/14skorea-promo/14skorea-promo-threeByTwoSmallAt2X-v3.jpg?quality=75&auto=webp&disable=upscale"
-            web_url="https://www.nytimes.com/2020/01/14/world/asia/south-korea-tourists-north-korea.html?searchResultPosition=1"
-            byline="By Choe Sang-Hun"
-            subsection_name="Asia Pacific"
-            pub_date="January 15, 2020, Page A7"
-          /> */}
         </ArticleContainer>
       </Container>
     );

@@ -36,9 +36,6 @@ const ArticleMain = styled.a`
 `;
 const ImageContainer = styled.div`
   margin-left: 40px;
-  @media (max-width: ${props => props.theme.screenSizes.PHONE}) {
-    margin: 18px 0px 10px 10px;
-  }
 `;
 const Image = styled.img`
   width: 200px;
@@ -51,6 +48,7 @@ const Image = styled.img`
   }
   @media (max-width: ${props => props.theme.screenSizes.PHONE}) {
     width: 120px;
+    margin: 18px 0px 10px 10px;
   }
 `;
 const Title = styled.div`
@@ -114,7 +112,11 @@ class Article extends Component {
             target="_blank"
             rel="noopener noreferrer"
           >
-            <SubsectionName>{this.props.subsection_name}</SubsectionName>
+            <SubsectionName>
+              {this.props.section_name
+                ? this.props.section_name
+                : this.props.subsection_name}
+            </SubsectionName>
             <Title>{this.props.main_headline}</Title>
             <Abstract>{this.props.abstract}</Abstract>
             <Info>{this.props.byline}</Info>
