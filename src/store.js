@@ -1,50 +1,29 @@
-import { createStore } from "redux";
-const initialState = {
-  loading: false,
-  articles: [],
-  favorites: {}
-};
-function reducer(state = initialState, action) {
-  if (action.type === "SET_LOADING") {
-    return {
-      ...state,
-      loading: true
-    };
-  }
-  if (action.type === "UNSET_LOADING") {
-    return {
-      ...state,
-      loading: false
-    };
-  }
-  if (action.type === "SET_ARTICLES") {
-    return {
-      ...state,
-      articles: action.new_articles
-    };
-  }
-  if (action.type === "LOAD_ARTICLES") {
-    return {
-      ...state,
-      articles: [...state.articles, action.new_articles]
-    };
-  }
-  if (action.type === "ADD_FAVORITE") {
-    return {
-      ...state,
-      favorites: { ...state.favorites, [action.article_id]: action.articleInfo }
-    };
-  }
-  if (action.type === "REMOVE_FAVORITE") {
-    const { [action.article_id]: value, ...remainFavorites } = state.favorites;
-    return {
-      ...state,
-      favorites: remainFavorites
-    };
+import { combineReducers, createStore } from "redux";
+import ArticleReducer from "./reducers/ArticleReducer";
+import FavoriteReducer from "./reducers/FavoriteReducer";
+import LoadingReducer from "./reducers/LoadingReducer";
+function KeywordReducer(state = "", action) {
+  if (action.type === "SET_KEYWORD") {
+    return action.new_keyword;
   }
   return state;
 }
+function PageReducer(state = 0, action) {
+  if (action.type === "SET_PAGE") {
+    return action.new_page;
+  }
+  return state;
+}
+
+const rootReducer = combineReducers({
+  keyword: KeywordReducer,
+  page: PageReducer,
+  articles: ArticleReducer,
+  favorites: FavoriteReducer,
+  loading: LoadingReducer
+});
+
 export default createStore(
-  reducer,
+  rootReducer,
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 );

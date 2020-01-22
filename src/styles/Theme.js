@@ -5,11 +5,15 @@ const theme = {
     grey: "#999999",
     lightDark: "#333"
   },
-  fonts: ["Noto Serif", "georgia", "times new roman", "sans-serif"],
+  fonts: {
+    keyword: "PT Sans",
+    abstract: "Gelasio"
+  },
   fontSizes: {
     large: "2rem",
     middle: "1.6rem",
     small: "1rem",
+    tiny: "0.8rem",
     main_headline: ["24px", "18px", "18px"],
     abstract: ["15px", "14px", "14px"],
     info: ["13px", "12px", "12px"],

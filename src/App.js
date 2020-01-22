@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Header from "./components/Header";
 import Main from "./containers/Main";
 import Favorites from "./containers/Favorites";
+import Footer from "./components/Footer";
 
 class App extends Component {
   render() {
@@ -22,6 +23,7 @@ class App extends Component {
               <Favorites />
             </Route>
           </Switch>
+          <Footer />
         </ThemeProvider>
       </Router>
     );

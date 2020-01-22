@@ -16,8 +16,12 @@ const Container = styled.div`
 `;
 const DateContainer = styled.div`
   width: 14%;
+  display: flex;
+  flex-direction: column;
   @media (max-width: ${props => props.theme.screenSizes.PHONE}) {
     width: 100%;
+    flex-direction: row;
+    justify-content: space-between;
   }
 `;
 const ArticleContainer = styled.div`
@@ -71,10 +75,13 @@ const Date = styled(Info)`
 `;
 const FavoriteIcon = styled.i`
   font-size: ${props => props.theme.fontSizes.small};
+  @media (max-width: ${props => props.theme.screenSizes.PHONE}) {
+    font-size: ${props => props.theme.fontSizes.tiny};
+  }
 `;
 
 const Abstract = styled(Info)`
-  font-family: Gelasio;
+  font-family: ${props => props.theme.fonts.abstract};
   color: ${props => props.theme.colors.lightDark};
   font-size: ${props => props.theme.fontSizes.abstract[0]};
   @media (max-width: ${props => props.theme.screenSizes.PHONE}) {

@@ -14,18 +14,34 @@ const Container = styled.header`
 
 const Logo = styled.img`
   height: 30px;
+  @media (max-width: ${props => props.theme.screenSizes.PHONE}) {
+    height: 24px;
+  }
 `;
 
-const Navigation = styled.nav``;
+const Navigation = styled.nav`
+  position: absolute;
+  top: 2vh;
+  right: 20px;
+`;
+const FavoriteIcon = styled.i`
+  font-size: ${props => props.theme.fontSizes.middle};
+  @media (max-width: ${props => props.theme.screenSizes.PHONE}) {
+    font-size: ${props => props.theme.fontSizes.small};
+  }
+`;
 
 class Header extends Component {
   render() {
     return (
       <Container>
-        <Logo src={logo} alt="THe New York Times" />
+        <Link to="/">
+          <Logo src={logo} alt="THe New York Times" />
+        </Link>
         <Navigation>
-          <Link to="/">Home</Link>
-          <Link to="/favorites">Favorites</Link>
+          <Link to="/favorites">
+            <FavoriteIcon className="fas fa-star"></FavoriteIcon>
+          </Link>
         </Navigation>
       </Container>
     );
