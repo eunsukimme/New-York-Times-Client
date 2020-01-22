@@ -4,7 +4,7 @@ New York Times API를 활용한 기사 검색 웹 어플리케이션
 
 ## 🎬 Getting Started
 
-개발 환경을 구축하는 방법은 다음과 같습니다.
+개발 환경을 구축하는 방법은 다음과 같습니다.
 
 ### ☝️ Requirements
 
