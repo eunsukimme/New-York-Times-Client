@@ -1,5 +1,6 @@
 import Article from "../components/Article";
 import { connect } from "react-redux";
+
 const mapStateToProps = state => {
   return {
     favorites: state.favorites

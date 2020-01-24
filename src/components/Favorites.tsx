@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import Article from "../containers/Article";
+import ArticleInfo from "../interfaces/ArticleInfo";
 
 const Container = styled.div`
   width: 100%;
@@ -34,7 +35,7 @@ const ArticleContainer = styled.div`
   align-items: center;
 `;
 interface FavoriteProps {
-  favorites: { [id: string]: object };
+  favorites: { [id: string]: ArticleInfo };
 }
 
 function Favorites({ favorites }: FavoriteProps) {
