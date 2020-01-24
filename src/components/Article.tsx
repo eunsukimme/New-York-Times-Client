@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import styled from "styled-components";
 import moment from "moment";
 
@@ -104,74 +104,92 @@ const PrintHeadline = styled.div`
   }
 `;
 
-class Article extends Component {
-  handleAdd() {
-    this.props.AddFavorite(this.props.articleInfo.id, this.props.articleInfo);
-  }
+interface ArticleProps {
+  favorites: { [id: string]: any };
+  articleInfo: {
+    id: string;
+    web_url: string;
+    section_name: string;
+    subsection_name: string;
+    main_headline: string;
+    abstract: string;
+    byline: string;
+    print_headline: string;
+    image_src: string;
+    pub_date: string;
+  };
+  AddFavorite: (id: string, articleInfo: object) => void;
+  RemoveFavorite: (id: string) => void;
+}
 
-  handleRemove() {
-    this.props.RemoveFavorite(this.props.articleInfo.id);
-  }
+function Article({
+  articleInfo,
+  favorites,
+  AddFavorite,
+  RemoveFavorite
+}: ArticleProps) {
+  const handleAdd = () => {
+    AddFavorite(articleInfo.id, articleInfo);
+  };
 
-  render() {
-    const {
-      id,
-      web_url,
-      section_name,
-      subsection_name,
-      main_headline,
-      abstract,
-      byline,
-      print_headline,
-      image_src
-    } = this.props.articleInfo;
-    const { favorites } = this.props;
-    const date = moment(this.props.articleInfo.pub_date);
-    const month = moment.months(date.get("month"));
-    const day = date.get("date");
+  const handleRemove = () => {
+    RemoveFavorite(articleInfo.id);
+  };
 
-    return (
-      <Container>
-        <DateContainer>
-          <Date>
-            {month} {day}
-          </Date>
-          {id in favorites && favorites[id] ? (
-            <FavoriteIcon
-              className="fas fa-star"
-              onClick={this.handleRemove.bind(this)}
-            ></FavoriteIcon>
-          ) : (
-            <FavoriteIcon
-              onClick={this.handleAdd.bind(this)}
-              className="far fa-star"
-            ></FavoriteIcon>
-          )}
-        </DateContainer>
-        <ArticleContainer>
-          <ArticleMain href={web_url} target="_blank" rel="noopener noreferrer">
-            <SubsectionName>
-              {section_name ? section_name : subsection_name}
-            </SubsectionName>
-            <Title>{main_headline}</Title>
-            <Abstract>
-              {abstract.length <= 20
-                ? abstract
-                : `${abstract.substring(0, 20)}...더보기`}
-            </Abstract>
-            <Info>{byline}</Info>
-            <Line></Line>
-            <PrintHeadline>
-              {print_headline ? `PRINT EDITION ${print_headline}` : undefined}
-            </PrintHeadline>
-          </ArticleMain>
-          <ImageContainer>
-            <Image src={image_src} alt="" />
-          </ImageContainer>
-        </ArticleContainer>
-      </Container>
-    );
-  }
+  return (
+    <Container>
+      <DateContainer>
+        <Date>
+          {moment
+            .months(moment(articleInfo.pub_date).get("month"))
+            .substring(0, 3)}{" "}
+          {moment(articleInfo.pub_date).get("date")}{" "}
+          {moment(articleInfo.pub_date).get("year")}
+        </Date>
+        {articleInfo.id in favorites && favorites[articleInfo.id] ? (
+          <FavoriteIcon
+            className="fas fa-star"
+            onClick={handleRemove}
+          ></FavoriteIcon>
+        ) : (
+          <FavoriteIcon
+            onClick={handleAdd}
+            className="far fa-star"
+          ></FavoriteIcon>
+        )}
+      </DateContainer>
+      <ArticleContainer>
+        <ArticleMain
+          href={articleInfo.web_url}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <SubsectionName>
+            {articleInfo.section_name
+              ? articleInfo.section_name
+              : articleInfo.subsection_name}
+          </SubsectionName>
+          <Title>{articleInfo.main_headline}</Title>
+          <Abstract>
+            {articleInfo.abstract.length <= 20
+              ? articleInfo.abstract
+              : `${articleInfo.abstract.substring(0, 20)}...더보기`}
+          </Abstract>
+          <Info>{articleInfo.byline}</Info>
+          <Line></Line>
+          <PrintHeadline>
+            {articleInfo.print_headline
+              ? `PRINT EDITION ${articleInfo.print_headline}`
+              : undefined}
+          </PrintHeadline>
+        </ArticleMain>
+        <ImageContainer>
+          <Image src={articleInfo.image_src} alt="" />
+        </ImageContainer>
+      </ArticleContainer>
+    </Container>
+  );
+  // }
 }
 
 export default Article;
