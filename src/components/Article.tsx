@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import moment from "moment";
+import ArticleInfo from "../interfaces/ArticleInfo";
 
 const Container = styled.div`
   width: 100%;
@@ -105,19 +106,8 @@ const PrintHeadline = styled.div`
 `;
 
 interface ArticleProps {
+  articleInfo: ArticleInfo;
   favorites: { [id: string]: any };
-  articleInfo: {
-    id: string;
-    web_url: string;
-    section_name: string;
-    subsection_name: string;
-    main_headline: string;
-    abstract: string;
-    byline: string;
-    print_headline: string;
-    image_src: string;
-    pub_date: string;
-  };
   AddFavorite: (id: string, articleInfo: object) => void;
   RemoveFavorite: (id: string) => void;
 }
@@ -171,7 +161,7 @@ function Article({
           </SubsectionName>
           <Title>{articleInfo.main_headline}</Title>
           <Abstract>
-            {articleInfo.abstract.length <= 20
+            {articleInfo.abstract && articleInfo.abstract.length <= 20
               ? articleInfo.abstract
               : `${articleInfo.abstract.substring(0, 20)}...더보기`}
           </Abstract>
@@ -189,7 +179,6 @@ function Article({
       </ArticleContainer>
     </Container>
   );
-  // }
 }
 
 export default Article;
