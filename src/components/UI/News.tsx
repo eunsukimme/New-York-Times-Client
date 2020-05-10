@@ -58,6 +58,7 @@ const Image = styled.img`
 const Title = styled.div`
   margin-bottom: 5px;
   font-size: ${(props) => props.theme.fontSizes.main_headline[0]};
+  color: black;
   @media (max-width: ${(props) => props.theme.screenSizes.PHONE}) {
     font-size: ${(props) => props.theme.fontSizes.main_headline[1]};
   }
@@ -65,6 +66,7 @@ const Title = styled.div`
 const Info = styled.div`
   margin-bottom: 5px;
   font-size: ${(props) => props.theme.fontSizes.info[0]};
+  color: black;
   @media (max-width: ${(props) => props.theme.screenSizes.PHONE}) {
     font-size: ${(props) => props.theme.fontSizes.info[1]};
   }
@@ -98,6 +100,7 @@ const Line = styled.div`
 const PrintHeadline = styled.div`
   max-width: 360px;
   font-size: ${(props) => props.theme.fontSizes.print_hl[0]};
+  color: black;
   @media (max-width: ${(props) => props.theme.screenSizes.PHONE}) {
     font-size: ${(props) => props.theme.fontSizes.print_hl[1]};
   }
@@ -109,10 +112,10 @@ type NewsProps = {
 
 function News({ newsInfo }: NewsProps) {
   const { news, handleToggleFavorite } = useNews();
-  const isFavorited = useMemo(() => newsInfo.id in news.favorites, [
-    news.favorites,
-    newsInfo.id,
-  ]);
+  const isFavorited = useMemo(
+    () => news.favorites.some((news) => news.id === newsInfo.id),
+    [news.favorites, newsInfo.id]
+  );
 
   return (
     <Container>
@@ -148,7 +151,7 @@ function News({ newsInfo }: NewsProps) {
           <Abstract>
             {newsInfo.abstract && newsInfo.abstract.length <= 20
               ? newsInfo.abstract
-              : `${newsInfo.abstract.substring(0, 20)}...more`}
+              : `${newsInfo.abstract.substring(0, 30)}...more`}
           </Abstract>
           <Info>{newsInfo.byline}</Info>
           <Line></Line>

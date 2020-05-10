@@ -82,6 +82,8 @@ const reducer = createReducer<NewsState, NewsActions>(initialState)
       payload.more
         ? (draft.data = state.data.concat(payload.news))
         : (draft.data = payload.news);
+      // page 추가
+      payload.more ? (draft.page = state.page + 1) : (draft.page = 1);
     })
   )
   .handleAction(getNewsFailure, (state, { payload }) =>

@@ -1,21 +1,20 @@
 import { take, call, put } from "redux-saga/effects";
 import { GET_NEWS } from "./constants";
 import { getNewsApi } from "../../lib/api/news";
-import { getNewsFailure, getNewsSuccess, changeField } from "./actions";
+import { getNewsFailure, getNewsSuccess } from "./actions";
 import { parseNews } from "./utils";
 
 export function* handleGetNews() {
   while (true) {
     try {
       const {
-        payload: { keyword, page },
+        payload: { keyword, page, more },
       } = yield take(GET_NEWS);
-      const response: any = yield call(getNewsApi, keyword, page);
+      const response: any = yield call(getNewsApi, keyword, more ? page : 0);
       console.log(response);
       if (response.docs) {
         const parsedNews = response.docs.map((news: any) => parseNews(news));
-        put(changeField("page", page + 1)); // add page count
-        yield put(getNewsSuccess(parsedNews));
+        yield put(getNewsSuccess(parsedNews, more));
       } else {
         yield put(getNewsFailure("Failed to get news."));
       }
