@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import styled from "styled-components";
 import { useNews } from "../hooks";
 import { News, Loader } from "../components";
@@ -72,25 +72,31 @@ function Main() {
    * input 태그 값의 변화가 있을 때마다 호출되고 state의 keyword를 변경한다
    * @param {React.FormEvent<HTMLInputElement>} e
    */
-  const handleChange = (e: React.FormEvent<HTMLInputElement>) => {
-    handleChangeNewsField("keyword", e.currentTarget.value);
-  };
+  const handleChange = useCallback(
+    (e: React.FormEvent<HTMLInputElement>) => {
+      handleChangeNewsField("keyword", e.currentTarget.value);
+    },
+    [handleChangeNewsField]
+  );
 
   /**
    * keyword로 검색하였을 때 호출되는 함수
    * @param {React.SyntheticEvent} e
    */
-  const handleSubmit = async (e: React.SyntheticEvent) => {
-    e.preventDefault(); // 이벤트의 전달(새로고침)을 방지
-    handleGetNews(news.keyword, news.page);
-  };
+  const handleSubmit = useCallback(
+    (e: React.SyntheticEvent) => {
+      e.preventDefault(); // 이벤트의 전달(새로고침)을 방지
+      handleGetNews(news.keyword, news.page);
+    },
+    [handleGetNews, news.keyword, news.page]
+  );
 
   /**
    * SHOW MORE 버튼을 누르면 호출되는 함수. 다음 페이지의 기사 20개를 가져온다
    */
-  const LoadMoreArticles = async () => {
+  const LoadMoreArticles = useCallback(() => {
     handleGetNews(news.originKeyword, news.page, true);
-  };
+  }, [handleGetNews, news.originKeyword, news.page]);
 
   return (
     <Container>
