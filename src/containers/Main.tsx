@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect } from "react";
 import styled from "styled-components";
 import { useNews } from "../hooks";
 import { News, Loader } from "../components";
@@ -67,7 +67,12 @@ const ShowMoreButton = styled.div`
 `;
 
 function Main() {
-  const { news, handleGetNews, handleChangeNewsField } = useNews();
+  const {
+    news,
+    handleGetNews,
+    handleChangeNewsField,
+    handleGetSections,
+  } = useNews();
   /**
    * input 태그 값의 변화가 있을 때마다 호출되고 state의 keyword를 변경한다
    * @param {React.FormEvent<HTMLInputElement>} e
@@ -98,6 +103,11 @@ function Main() {
     handleGetNews(news.originKeyword, news.page, true);
   }, [handleGetNews, news.originKeyword, news.page]);
 
+  /** section list 를 불러오는 함수 */
+  useEffect(() => {
+    handleGetSections();
+  }, [handleGetSections]);
+
   return (
     <Container>
       <SearchContainer>
@@ -123,7 +133,12 @@ function Main() {
         )}
       </NewsContainer>
       {/* loader */}
-      <Loader visible={news.getNews.status === AsyncType.WAITING} />
+      <Loader
+        visible={
+          news.getNews.status === AsyncType.WAITING ||
+          news.getSections.status === AsyncType.WAITING
+        }
+      />
     </Container>
   );
 }

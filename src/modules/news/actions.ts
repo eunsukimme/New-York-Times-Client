@@ -5,6 +5,9 @@ import {
   GET_NEWS_SUCCESS,
   CHANGE_FIELD,
   TOGGLE_FAVORITE,
+  GET_SECTIONS,
+  GET_SECTIONS_FAILURE,
+  GET_SECTIONS_SUCCESS,
 } from "./constants";
 
 /**
@@ -33,6 +36,16 @@ export const toggleFavorite = createAction(
   TOGGLE_FAVORITE,
   (news_id: string, action: "add" | "remove") => ({ news_id, action })
 )();
+/** get sections list */
+export const getSections = createAction(GET_SECTIONS)();
+export const getSectionsSuccess = createAction(
+  GET_SECTIONS_SUCCESS,
+  (sections: string[]) => sections
+)();
+export const getSectionsFailure = createAction(
+  GET_SECTIONS_FAILURE,
+  (error: string) => error
+)();
 
 /**
  * Actions Typescript type
@@ -43,5 +56,8 @@ const actions = {
   getNewsSuccess,
   changeField,
   toggleFavorite,
+  getSections,
+  getSectionsFailure,
+  getSectionsSuccess,
 };
 export type NewsActions = ActionType<typeof actions>;

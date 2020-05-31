@@ -1,7 +1,7 @@
 import { all } from "redux-saga/effects";
 import { combineReducers } from "redux";
 import newsReducer from "./news/reducer";
-import { handleGetNews } from "./news/sagas";
+import { handleGetNews, handleGetSections } from "./news/sagas";
 
 /** root reducer */
 const rootReducer = combineReducers({
@@ -13,7 +13,8 @@ export type RootState = ReturnType<typeof rootReducer>;
 /** root saga */
 export function* rootSaga() {
   yield all([
-    /** newx */
+    /** news */
     handleGetNews(),
+    handleGetSections(),
   ]);
 }
