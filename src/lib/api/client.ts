@@ -12,7 +12,9 @@ client.interceptors.request.use((config) => {
 /** add interceptor for reaponse */
 // Add a response interceptor
 client.interceptors.response.use(
-  (res) => res.data.response,
+  (res) => {
+    return res.data;
+  },
   function (error) {
     // Any status codes that falls outside the range of 2xx cause this function to trigger
     // Do something with response error

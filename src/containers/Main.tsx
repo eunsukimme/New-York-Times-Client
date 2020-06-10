@@ -1,9 +1,10 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect } from "react";
 import styled from "styled-components";
 import { useNews } from "../hooks";
 import { News, Loader } from "../components";
 import { NewsDataState } from "../modules/news/reducer";
 import { AsyncType } from "../modules/types";
+import { Category } from "../components/button";
 
 const Container = styled.div`
   width: 100%;
@@ -45,6 +46,15 @@ const StyledIcon = styled.i`
   color: ${(props) => props.theme.colors.grey};
   font-size: ${(props) => props.theme.fontSizes.middle};
 `;
+const CategoryContainer = styled.div`
+  width: 90%;
+  max-width: 1200px;
+  padding: 20px 0px;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  border-bottom: 1px solid #eeeeee;
+`;
 const NewsContainer = styled.div`
   width: 90%;
   min-height: 78vh;
@@ -67,7 +77,12 @@ const ShowMoreButton = styled.div`
 `;
 
 function Main() {
-  const { news, handleGetNews, handleChangeNewsField } = useNews();
+  const {
+    news,
+    handleGetNews,
+    handleChangeNewsField,
+    handleGetSections,
+  } = useNews();
   /**
    * input 태그 값의 변화가 있을 때마다 호출되고 state의 keyword를 변경한다
    * @param {React.FormEvent<HTMLInputElement>} e
@@ -98,6 +113,11 @@ function Main() {
     handleGetNews(news.originKeyword, news.page, true);
   }, [handleGetNews, news.originKeyword, news.page]);
 
+  /** section list 를 불러오는 함수 */
+  useEffect(() => {
+    handleGetSections();
+  }, [handleGetSections]);
+
   return (
     <Container>
       <SearchContainer>
@@ -114,6 +134,11 @@ function Main() {
           ></StyledIcon>
         </StyledForm>
       </SearchContainer>
+      <CategoryContainer>
+        {news.sections.map((category) => (
+          <Category name={category} onClick={(e: any) => console.log(e)} />
+        ))}
+      </CategoryContainer>
       <NewsContainer>
         {news.data.map((_news: NewsDataState) => (
           <News key={_news.id} newsInfo={_news} />
@@ -123,7 +148,12 @@ function Main() {
         )}
       </NewsContainer>
       {/* loader */}
-      <Loader visible={news.getNews.status === AsyncType.WAITING} />
+      <Loader
+        visible={
+          news.getNews.status === AsyncType.WAITING ||
+          news.getSections.status === AsyncType.WAITING
+        }
+      />
     </Container>
   );
 }

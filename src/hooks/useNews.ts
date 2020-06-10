@@ -1,6 +1,11 @@
 import { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getNews, changeField, toggleFavorite } from "../modules/news/actions";
+import {
+  getNews,
+  changeField,
+  toggleFavorite,
+  getSections,
+} from "../modules/news/actions";
 import { RootState } from "../modules/index";
 
 export default function useNews() {
@@ -24,6 +29,10 @@ export default function useNews() {
       dispatch(toggleFavorite(news_id, action)),
     [dispatch]
   );
+  /** get sections list */
+  const handleGetSections = useCallback(() => dispatch(getSections()), [
+    dispatch,
+  ]);
 
   return {
     news,
@@ -31,5 +40,6 @@ export default function useNews() {
     handleGetNews,
     handleChangeNewsField,
     handleToggleFavorite,
+    handleGetSections,
   };
 }
