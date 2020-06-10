@@ -4,6 +4,7 @@ import { useNews } from "../hooks";
 import { News, Loader } from "../components";
 import { NewsDataState } from "../modules/news/reducer";
 import { AsyncType } from "../modules/types";
+import { Category } from "../components/button";
 
 const Container = styled.div`
   width: 100%;
@@ -44,6 +45,15 @@ const StyledIcon = styled.i`
   cursor: pointer;
   color: ${(props) => props.theme.colors.grey};
   font-size: ${(props) => props.theme.fontSizes.middle};
+`;
+const CategoryContainer = styled.div`
+  width: 90%;
+  max-width: 1200px;
+  padding: 20px 0px;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  border-bottom: 1px solid #eeeeee;
 `;
 const NewsContainer = styled.div`
   width: 90%;
@@ -124,6 +134,11 @@ function Main() {
           ></StyledIcon>
         </StyledForm>
       </SearchContainer>
+      <CategoryContainer>
+        {news.sections.map((category) => (
+          <Category name={category} onClick={(e: any) => console.log(e)} />
+        ))}
+      </CategoryContainer>
       <NewsContainer>
         {news.data.map((_news: NewsDataState) => (
           <News key={_news.id} newsInfo={_news} />
