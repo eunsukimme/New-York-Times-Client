@@ -136,7 +136,11 @@ function Main() {
       </SearchContainer>
       <CategoryContainer>
         {news.sections.map((category) => (
-          <Category name={category} onClick={(e: any) => console.log(e)} />
+          <Category
+            key={category}
+            name={category}
+            onClick={(e: any) => console.log(e)}
+          />
         ))}
       </CategoryContainer>
       <NewsContainer>
