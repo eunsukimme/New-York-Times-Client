@@ -52,41 +52,43 @@ New York Times Client는 다음 기능들을 제공합니다.
 src 폴더의 구조는 다음과 같습니다.
 
 ```
-├── App.js
 ├── App.test.js
-├── assets
-│   └── loading.gif
+├── App.tsx
+├── assets/
 ├── components
-│   ├── Article.js
-│   ├── Favorites.js
-│   ├── Footer.js
-│   ├── Header.js
-│   └── Main.js
+│   ├── UI/
+│   ├── button/
+│   ├── common/
+│   └── index.ts
 ├── containers
-│   ├── Article.js
-│   ├── Favorites.js
-│   └── Main.js
-├── index.js
-├── logo.svg
-├── reducers
-│   ├── ArticleReducer.js
-│   ├── FavoriteReducer.js
-│   └── LoadingReducer.js
-├── serviceWorker.js
-├── setupTests.js
-├── store.js
-└── styles
-    ├── Theme.js
-    └── global.js
+│   ├── Favorites.tsx
+│   ├── Main.tsx
+│   └── index.ts
+├── hooks
+│   ├── index.ts
+│   └── useNews.ts
+├── index.tsx
+├── lib
+│   ├── api/
+│   └── styles/
+└── modules
+    ├── index.ts
+    ├── news
+    │   ├── actions.ts
+    │   ├── constants.ts
+    │   ├── reducer.ts
+    │   ├── sagas.ts
+    │   └── utils.ts
+    └── types.ts
 ```
 
 ### 🗂 Folders
 
 - `assets` : 이미지 등의 미디어 파일들을 보관합니다.
-- `components` : 메인, 헤더, 기사 등의 컴포넌트들을 보관합니다.
-- `containers` : Redux store와 각 컴포넌트들을 연결(connect)해주는 wrapping 컨테이너를 보관합니다.
-- `reducers` : 특정 state의 업데이트를 담당하는 reducer를 보관합니다.
-- `styles` : 컴포넌트를 스타일링하는 파일들을 보관합니다.
+- `components` : button, icon 등 재사용 가능한 UI 컴포넌트들을 보관합니다.
+- `containers` : Stateful 한 컴포넌트들을 보관합니다.
+- `modules` : Redux 모듈들을 보관합니다.
+- `hooks` : React hook 모듈들을 보관합니다.
 
 ## ⚖️ License
 
