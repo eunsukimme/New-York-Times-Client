@@ -8,6 +8,9 @@ import {
   GET_SECTIONS,
   GET_SECTIONS_FAILURE,
   GET_SECTIONS_SUCCESS,
+  SET_SECTION,
+  GET_TOP_NEWS_FAILURE,
+  GET_TOP_NEWS_SUCCESS,
 } from "./constants";
 
 /**
@@ -47,6 +50,20 @@ export const getSectionsFailure = createAction(
   (error: string) => error
 )();
 
+/** set section and get top news of the section */
+export const setSection = createAction(
+  SET_SECTION,
+  (section: string) => section
+)();
+export const getTopNewsOfTheSectionSuccess = createAction(
+  GET_TOP_NEWS_SUCCESS,
+  (news: any) => news
+)();
+export const getTopNewsOfTheSectionFaiulre = createAction(
+  GET_TOP_NEWS_FAILURE,
+  (error: any) => error
+)();
+
 /**
  * Actions Typescript type
  */
@@ -59,5 +76,8 @@ const actions = {
   getSections,
   getSectionsFailure,
   getSectionsSuccess,
+  setSection,
+  getTopNewsOfTheSectionFaiulre,
+  getTopNewsOfTheSectionSuccess,
 };
 export type NewsActions = ActionType<typeof actions>;

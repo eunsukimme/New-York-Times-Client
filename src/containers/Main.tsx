@@ -82,6 +82,7 @@ function Main() {
     handleGetNews,
     handleChangeNewsField,
     handleGetSections,
+    handleSetSection,
   } = useNews();
   /**
    * input 태그 값의 변화가 있을 때마다 호출되고 state의 keyword를 변경한다
@@ -137,9 +138,11 @@ function Main() {
       <CategoryContainer>
         {news.sections.map((category) => (
           <Category
+            onClick={(e: React.MouseEvent<HTMLButtonElement>) =>
+              handleSetSection(category)
+            }
             key={category}
             name={category}
-            onClick={(e: any) => console.log(e)}
           />
         ))}
       </CategoryContainer>

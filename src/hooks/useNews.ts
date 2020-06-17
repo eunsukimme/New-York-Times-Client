@@ -5,6 +5,7 @@ import {
   changeField,
   toggleFavorite,
   getSections,
+  setSection,
 } from "../modules/news/actions";
 import { RootState } from "../modules/index";
 
@@ -33,6 +34,11 @@ export default function useNews() {
   const handleGetSections = useCallback(() => dispatch(getSections()), [
     dispatch,
   ]);
+  /** set section */
+  const handleSetSection = useCallback(
+    (section: string) => dispatch(setSection(section)),
+    [dispatch]
+  );
 
   return {
     news,
@@ -41,5 +47,6 @@ export default function useNews() {
     handleChangeNewsField,
     handleToggleFavorite,
     handleGetSections,
+    handleSetSection,
   };
 }

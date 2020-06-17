@@ -8,3 +8,6 @@ export const getSectionsApi = () =>
 
 export const getRecentNewsApi = (source: string, section: string) =>
   client.get(`/news/v3/content/all/all.json`);
+
+export const getTopStoriesApi = (section: string = "world") =>
+  client.get(`/topstories/v2/${section}.json`);

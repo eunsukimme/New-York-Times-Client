@@ -10,6 +10,9 @@ import {
   getSections,
   getSectionsFailure,
   getSectionsSuccess,
+  setSection,
+  getTopNewsOfTheSectionFaiulre,
+  getTopNewsOfTheSectionSuccess,
 } from "./actions";
 import { AsyncType } from "../types";
 
@@ -35,11 +38,16 @@ export type NewsState = {
   data: NewsDataState[];
   favorites: NewsDataState[];
   sections: string[];
+  selectedSection: string;
   getNews: {
     status: AsyncType;
     error: string;
   };
   getSections: {
+    status: AsyncType;
+    error: string;
+  };
+  getTopNews: {
     status: AsyncType;
     error: string;
   };
@@ -52,11 +60,16 @@ const initialState: NewsState = {
   data: [],
   favorites: [],
   sections: [],
+  selectedSection: "world",
   getNews: {
     status: AsyncType.INIT,
     error: "",
   },
   getSections: {
+    status: AsyncType.INIT,
+    error: "",
+  },
+  getTopNews: {
     status: AsyncType.INIT,
     error: "",
   },
@@ -120,6 +133,23 @@ const reducer = createReducer<NewsState, NewsActions>(initialState)
     produce(state, (draft) => {
       draft.getSections.status = AsyncType.FAILURE;
       draft.getSections.error = payload;
+    })
+  )
+  .handleAction(setSection, (state, { payload }) =>
+    produce(state, (draft) => {
+      draft.selectedSection = payload;
+    })
+  )
+  .handleAction(getTopNewsOfTheSectionSuccess, (state, { payload }) =>
+    produce(state, (draft) => {
+      draft.data = payload;
+      draft.getTopNews.status = AsyncType.SUCCESS;
+    })
+  )
+  .handleAction(getTopNewsOfTheSectionFaiulre, (state, { payload }) =>
+    produce(state, (draft) => {
+      draft.getTopNews.status = AsyncType.FAILURE;
+      draft.getTopNews.error = payload;
     })
   );
 

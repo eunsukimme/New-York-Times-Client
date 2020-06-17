@@ -21,9 +21,9 @@ const Container = styled.button`
 
 type CategoryProps = {
   name: string;
-  onClick: Function;
+  onClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
 };
 
-export default function Category({ name }: CategoryProps) {
-  return <Container>{name}</Container>;
+export default function Category({ name, onClick }: CategoryProps) {
+  return <Container onClick={onClick}>{name}</Container>;
 }

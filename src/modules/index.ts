@@ -1,7 +1,11 @@
 import { all } from "redux-saga/effects";
 import { combineReducers } from "redux";
 import newsReducer from "./news/reducer";
-import { handleGetNews, handleGetSections } from "./news/sagas";
+import {
+  handleGetNews,
+  handleGetSections,
+  handleGetTopNews,
+} from "./news/sagas";
 
 /** root reducer */
 const rootReducer = combineReducers({
@@ -16,5 +20,6 @@ export function* rootSaga() {
     /** news */
     handleGetNews(),
     handleGetSections(),
+    handleGetTopNews(),
   ]);
 }
