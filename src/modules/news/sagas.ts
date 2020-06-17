@@ -13,7 +13,7 @@ import {
   getTopNewsOfTheSectionFaiulre,
   getTopNewsOfTheSectionSuccess,
 } from "./actions";
-import { parseNews } from "./utils";
+import { parseNews, parseTopNews } from "./utils";
 import { defaultErrorMsg } from "../../setting/config";
 
 /** GET_NEWS action 이 dispatch 되면 api 를 호출하는 함수 */
@@ -64,18 +64,17 @@ export function* handleGetTopNews() {
     try {
       const { payload } = yield take(SET_SECTION);
       const response: any = yield call(getTopStoriesApi, payload);
-      console.log(response);
       if (response.status === "OK") {
-        // const parsedSections = response.results.map(
-        //   (data: any) => data.display_name
-        // );
-        // yield put(getSectionsSuccess(parsedSections));
+        const parsedTopNews = response.results.map((data: any) =>
+          parseTopNews(data)
+        );
+        yield put(getTopNewsOfTheSectionSuccess(parsedTopNews));
       } else {
-        // yield put(getSectionsFailure(""));
+        yield put(getTopNewsOfTheSectionFaiulre("Failed to fetch top news."));
       }
     } catch (e) {
       console.log(e);
-      // yield put(getSectionsFailure(defaultErrorMsg));
+      yield put(getTopNewsOfTheSectionFaiulre(defaultErrorMsg));
     }
   }
 }

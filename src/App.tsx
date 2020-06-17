@@ -7,6 +7,7 @@ import theme from "./lib/styles/Theme";
 
 const Main = React.lazy(() => import("./containers/Main"));
 const Favorites = React.lazy(() => import("./containers/Favorites"));
+const Search = React.lazy(() => import("./containers/Search"));
 
 class App extends Component {
   render() {
@@ -17,6 +18,7 @@ class App extends Component {
             <Header />
             <Switch>
               <Route exact path="/" component={Main} />
+              <Route exact path="/search" component={Search} />
               <Route path="/favorites" component={Favorites} />
             </Switch>
             <Footer />

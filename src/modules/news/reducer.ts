@@ -138,6 +138,7 @@ const reducer = createReducer<NewsState, NewsActions>(initialState)
   .handleAction(setSection, (state, { payload }) =>
     produce(state, (draft) => {
       draft.selectedSection = payload;
+      draft.getTopNews.status = AsyncType.WAITING;
     })
   )
   .handleAction(getTopNewsOfTheSectionSuccess, (state, { payload }) =>

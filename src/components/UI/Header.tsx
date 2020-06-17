@@ -17,6 +17,10 @@ const Logo = styled.img`
   }
 `;
 const Navigation = styled.nav`
+  width: 80px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   position: absolute;
   top: 2vh;
   right: 20px;
@@ -35,6 +39,9 @@ function Header() {
         <Logo src={logo} alt="The New York Times" />
       </Link>
       <Navigation>
+        <Link to="/search">
+          <FavoriteIcon className="fas fa-search"></FavoriteIcon>
+        </Link>
         <Link to="/favorites">
           <FavoriteIcon className="fas fa-star"></FavoriteIcon>
         </Link>
